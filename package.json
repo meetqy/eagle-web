@@ -1,5 +1,5 @@
 {
-  "name": "eagleuse",
+  "name": "eagle-web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "license": "MIT",
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
     "@types/node": "18.11.9",

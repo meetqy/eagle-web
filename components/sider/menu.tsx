@@ -8,6 +8,7 @@ import {
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
+import { useRouter } from "next/router";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -29,15 +30,17 @@ function getItem(
 
 const items: MenuProps["items"] = [
   getItem("全部", "all", <FileImageOutlined />),
-  getItem("未标签", "notTag", <FileUnknownOutlined />),
+  getItem("未标签", "not-tag", <FileUnknownOutlined />),
   getItem("随机模式", "random", <SwapOutlined />),
   getItem("标签管理", "tags", <TagsOutlined />),
   getItem("回收站", "recycle", <DeleteOutlined />),
 ];
 
-const App: React.FC = () => {
+const SiderMenu: React.FC = () => {
+  const router = useRouter();
+
   const onClick: MenuProps["onClick"] = (e) => {
-    console.log("click ", e);
+    router.push("/" + e.key);
   };
 
   return (
@@ -51,4 +54,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default SiderMenu;
