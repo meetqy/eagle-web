@@ -2,12 +2,14 @@ lockfileVersion: 5.4
 
 specifiers:
   '@ant-design/icons': ^4.8.0
+  '@types/justified-layout': ^4.1.0
   '@types/node': 18.11.9
   '@types/react': 18.0.25
   '@types/react-dom': 18.0.9
   antd: ^5.0.2
   eslint: 8.28.0
   eslint-config-next: 13.0.5
+  justified-layout: ^4.1.0
   next: 13.0.5
   react: 18.2.0
   react-dom: 18.2.0
@@ -15,12 +17,14 @@ specifiers:
 
 dependencies:
   '@ant-design/icons': 4.8.0_biqbaboplfbrettd7655fr4n2y
+  '@types/justified-layout': 4.1.0
   '@types/node': 18.11.9
   '@types/react': 18.0.25
   '@types/react-dom': 18.0.9
   antd: 5.0.2_biqbaboplfbrettd7655fr4n2y
   eslint: 8.28.0
   eslint-config-next: 13.0.5_hsf322ms6xhhd4b5ne6lb74y4a
+  justified-layout: 4.1.0
   next: 13.0.5_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -351,6 +355,10 @@ packages:
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
+    dev: false
+
+  /@types/justified-layout/4.1.0:
+    resolution: {integrity: sha512-D8u3yfJjx1xjRJxWUVJlTmFxSN0ph5BpkQo9dTIO1LpYFu0WS1XcWJoNAKJZql+jyiZB5eHt0UKxC1wsmO3/LQ==}
     dev: false
 
   /@types/node/18.11.9:
@@ -1550,6 +1558,10 @@ packages:
     dependencies:
       array-includes: 3.1.6
       object.assign: 4.1.4
+    dev: false
+
+  /justified-layout/4.1.0:
+    resolution: {integrity: sha512-M5FimNMXgiOYerVRGsXZ2YK9YNCaTtwtYp7Hb2308U1Q9TXXHx5G0p08mcVR5O53qf8bWY4NJcPBxE6zuayXSg==}
     dev: false
 
   /language-subtag-registry/0.3.22:

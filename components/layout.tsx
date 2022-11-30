@@ -11,8 +11,15 @@ export default function App({ children }: { children: JSX.Element }) {
         <Sider width={240} style={{ padding: 10 }}>
           <SiderMenu />
         </Sider>
-        <Content>
-          <Layout>{children}</Layout>
+        <Content
+          className="main"
+          style={{
+            position: "relative",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
+          {children}
         </Content>
         <Sider width={240}>right</Sider>
       </Layout>
