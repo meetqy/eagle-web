@@ -12,6 +12,7 @@ namespace API {
     url: string;
     annotation: string;
     modificationTime: number;
+    noThumbnail: boolean;
     width: number;
     height: number;
     lastModified: number;

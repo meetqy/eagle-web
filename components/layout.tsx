@@ -12,7 +12,7 @@ export default function App({ children }: { children: JSX.Element }) {
           <SiderMenu />
         </Sider>
         <Content
-          className="main"
+          className="main scroll-bar"
           style={{
             position: "relative",
             overflowY: "auto",

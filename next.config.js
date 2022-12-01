@@ -6,7 +6,7 @@ const nextConfig = {
   publicRuntimeConfig: {
     api: {
       host: "http://localhost:3000",
-      limit: 100,
+      limit: 50,
     },
   },
 
