@@ -12,3 +12,5 @@ export const handleImageSrc = (data: API.Image, thumbnail: boolean = false) => {
 
   return `${prefix}.${data.ext}`;
 };
+
+export * from "./api";

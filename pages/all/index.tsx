@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { selectImages } from "../../hooks/api";
 import justifyLayout from "justified-layout";
-import { handleImageSrc } from "../../hooks";
+import { handleImageSrc, selectImages } from "@/hooks";
 import Image from "next/image";
 import { Button, Card } from "antd";
+import { observer } from "mobx-react-lite";
+import countStore from "@/store/count";
 
-export default function Page() {
+const Page = observer(() => {
   const [loading, setLoading] = useState(false);
   const [layoutPos, setLayoutPos] = useState<any>();
   const [page, setPage] = useState(1);
@@ -13,7 +14,10 @@ export default function Page() {
 
   useEffect(() => {
     selectImages({ _page: page })
-      .then((res) => res.json())
+      .then((res) => {
+        countStore.setAll(Number(res.headers.get("X-Total-Count")));
+        return res.json();
+      })
       .then((v) => {
         setData((d) => d.concat(v));
         setLoading(false);
@@ -47,8 +51,7 @@ export default function Page() {
     </div>
   );
 
-  if (!data) return;
-  if (!layoutPos) return;
+  if (!data || !layoutPos) return <></>;
 
   return (
     <>
@@ -86,7 +89,6 @@ export default function Page() {
       <div style={{ paddingBottom: 20 }}>{loadMore}</div>
     </>
   );
-}
-function ref(arg0: never[]): API.Image[] {
-  throw new Error("Function not implemented.");
-}
+});
+
+export default Page;
