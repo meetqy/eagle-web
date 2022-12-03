@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --port 3008",
     "build": "next build",
-    "start": "next start",
+    "start": "next start --port 3008",
     "lint": "next lint"
   },
   "license": "MIT",
