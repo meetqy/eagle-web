@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   DeleteOutlined,
   FileImageOutlined,
@@ -6,11 +6,11 @@ import {
   SwapOutlined,
   TagsOutlined,
 } from "@ant-design/icons";
-import { Badge, Button, MenuProps, Tag } from "antd";
+import { Badge, Button, MenuProps } from "antd";
 import { Menu } from "antd";
 import { useRouter } from "next/router";
-import { observer } from "mobx-react-lite";
-import countStore from "@/store/count";
+import { useRecoilValue } from "recoil";
+import { totalState } from "@/store/total";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -30,8 +30,9 @@ function getItem(
   } as MenuItem;
 }
 
-const SiderMenu = observer(() => {
+const SiderMenu = () => {
   const router = useRouter();
+  const total = useRecoilValue(totalState);
 
   const onClick: MenuProps["onClick"] = (e) => {
     router.push("/" + e.key);
@@ -42,12 +43,12 @@ const SiderMenu = observer(() => {
       <span
         style={{
           display: "inline-flex",
-          width: "80%",
+          width: "85%",
           justifyContent: "space-between",
         }}
       >
         <span>全部</span>
-        <span style={{ color: "#a3a4a8" }}>{countStore.all}</span>
+        <span style={{ color: "rgba(255,255,255,.5)" }}>{total.all}</span>
       </span>,
       "all",
       <FileImageOutlined />
@@ -69,6 +70,6 @@ const SiderMenu = observer(() => {
       />
     </>
   );
-});
+};
 
 export default SiderMenu;

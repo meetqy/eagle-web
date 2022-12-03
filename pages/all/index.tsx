@@ -3,10 +3,11 @@ import justifyLayout from "justified-layout";
 import { handleImageSrc, selectImages } from "@/hooks";
 import Image from "next/image";
 import { Button, Card } from "antd";
-import { observer } from "mobx-react-lite";
-import countStore from "@/store/count";
+import { useRecoilState } from "recoil";
+import { totalState } from "@/store/total";
 
-const Page = observer(() => {
+const Page = () => {
+  const [total, setTotal] = useRecoilState(totalState);
   const [loading, setLoading] = useState(false);
   const [layoutPos, setLayoutPos] = useState<any>();
   const [page, setPage] = useState(1);
@@ -15,7 +16,11 @@ const Page = observer(() => {
   useEffect(() => {
     selectImages({ _page: page })
       .then((res) => {
-        countStore.setAll(Number(res.headers.get("X-Total-Count")));
+        setTotal({
+          ...total,
+          all: Number(res.headers.get("X-Total-Count")),
+        });
+        // countStore.setAll(Number(res.headers.get("X-Total-Count")));
         return res.json();
       })
       .then((v) => {
@@ -89,6 +94,6 @@ const Page = observer(() => {
       <div style={{ paddingBottom: 20 }}>{loadMore}</div>
     </>
   );
-});
+};
 
 export default Page;
