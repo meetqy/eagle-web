@@ -12,26 +12,38 @@ const Page = () => {
   const [layoutPos, setLayoutPos] = useState<any>();
   const [page, setPage] = useState(1);
   const [data, setData] = useState<API.Image[]>([]);
+  const [init, setInit] = useState(true);
 
+  // 请求第一页数据，设置图片总数
   useEffect(() => {
-    if (total.all) return;
+    if (!init) return;
 
-    selectImages({ _page: page })
+    onLoadMore(1, (all) => {
+      setTotal({
+        ...total,
+        all,
+      });
+    });
+    setInit(false);
+  }, [init, setTotal, total]);
+
+  // 加载更多
+  const onLoadMore = (_page: number, fn?: (all: number) => void) => {
+    setLoading(true);
+    selectImages({ _page })
       .then((res) => {
         const totalCount = Number(res.headers.get("X-Total-Count"));
-        setTotal({
-          ...total,
-          all: totalCount,
-        });
-
+        fn && fn(totalCount);
         return res.json();
       })
       .then((v) => {
         setData((d) => d.concat(v));
+        setPage(_page);
         setLoading(false);
       });
-  }, [page, setTotal, total]);
+  };
 
+  // 通过data获取图片位置
   useEffect(() => {
     setLayoutPos(
       justifyLayout([...data], {
@@ -46,14 +58,13 @@ const Page = () => {
     );
   }, [data]);
 
-  const onLoadMore = () => {
-    setLoading(true);
-    setPage(page + 1);
-  };
-
   const loadMore = (
     <div style={{ textAlign: "center" }}>
-      <Button onClick={onLoadMore} type="link" disabled={loading}>
+      <Button
+        onClick={() => onLoadMore(page + 1)}
+        type="link"
+        disabled={loading}
+      >
         加载更多
       </Button>
     </div>
