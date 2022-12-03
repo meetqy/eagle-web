@@ -14,20 +14,23 @@ const Page = () => {
   const [data, setData] = useState<API.Image[]>([]);
 
   useEffect(() => {
+    if (total.all) return;
+
     selectImages({ _page: page })
       .then((res) => {
+        const totalCount = Number(res.headers.get("X-Total-Count"));
         setTotal({
           ...total,
-          all: Number(res.headers.get("X-Total-Count")),
+          all: totalCount,
         });
-        // countStore.setAll(Number(res.headers.get("X-Total-Count")));
+
         return res.json();
       })
       .then((v) => {
         setData((d) => d.concat(v));
         setLoading(false);
       });
-  }, [page]);
+  }, [page, setTotal, total]);
 
   useEffect(() => {
     setLayoutPos(
