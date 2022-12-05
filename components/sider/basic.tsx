@@ -1,4 +1,4 @@
-import { handleImageSrc } from "@/hooks";
+import { handleImageSrc, imageLoader } from "@/hooks";
 import Image from "next/image";
 import { activeImageState, tagsState } from "@/store";
 import { useRecoilValue } from "recoil";
@@ -31,11 +31,18 @@ const SiderBasic = () => {
   return (
     <div style={{ padding: 20 }}>
       <Image
-        width={200}
-        height={image.height / (image.width / 200)}
-        style={{ objectFit: "contain", borderRadius: 8, margin: "auto" }}
+        width={0}
+        height={0}
+        style={{
+          objectFit: "contain",
+          borderRadius: 8,
+          margin: "auto",
+          width: 200,
+          height: image.height / (image.width / 200),
+        }}
+        alt={`${image.id}.info/${image.name}.${image.ext}`}
         src={handleImageSrc(image, true)}
-        alt={`${image.id}/${image.name}/${image.ext}`}
+        loader={imageLoader}
       />
 
       <Row

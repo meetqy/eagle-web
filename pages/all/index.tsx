@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import justifyLayout from "justified-layout";
-import { handleImageSrc, selectImages } from "@/hooks";
+import { handleImageSrc, imageLoader, selectImages } from "@/hooks";
 import Image from "next/image";
 import { Button, Card, theme } from "antd";
 import { useRecoilState } from "recoil";
@@ -102,19 +102,28 @@ const Page = () => {
                 background: `rgb(${image.palettes[0].color}, .25)`,
                 overflow: "hidden",
                 ...(active === i
-                  ? { borderColor: token.colorPrimary, borderWidth: 4 }
+                  ? {
+                      outline: `4px solid ${token.colorPrimary}`,
+                      border: 0,
+                    }
                   : {}),
               }}
+              bodyStyle={{ padding: 0, ...item }}
               onClick={() => setActive(i)}
-              cover={
-                <Image
-                  width={item.width}
-                  height={item.height}
-                  src={handleImageSrc(image, true)}
-                  alt={`${image.id}/${image.name}/${image.ext}`}
-                />
-              }
-            />
+            >
+              <Image
+                priority
+                width={0}
+                height={0}
+                loader={imageLoader}
+                src={handleImageSrc(image, true)}
+                alt={`${image.id}/${image.name}/${image.ext}`}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
+            </Card>
           );
         })}
       </div>

@@ -35,7 +35,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "env.d.ts"
-  ],
+, "loader/image.js", "loader/image.js"  ],
   "exclude": [
     "node_modules"
   ]

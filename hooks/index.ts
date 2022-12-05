@@ -1,4 +1,5 @@
 import getConfig from "next/config";
+import { ImageLoaderProps } from "next/image";
 
 const { api }: { api: API.Env } = getConfig().publicRuntimeConfig;
 
@@ -11,6 +12,10 @@ export const handleImageSrc = (data: API.Image, thumbnail: boolean = false) => {
   }
 
   return `${prefix}.${data.ext}`;
+};
+
+export const imageLoader = ({ src }: ImageLoaderProps) => {
+  return `${src}`;
 };
 
 export * from "./api";
