@@ -17,6 +17,7 @@ namespace API {
     height: number;
     lastModified: number;
     palettes: ImagePalette[];
+    star: number;
   }
 
   interface ImagePalette {
@@ -27,5 +28,11 @@ namespace API {
   interface Env {
     host: string;
     limit: number;
+  }
+
+  interface Tags {
+    historyTags: string[];
+    // 常用
+    starredTags: string[];
   }
 }

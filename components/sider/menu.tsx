@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   DeleteOutlined,
   FileImageOutlined,
@@ -6,11 +6,13 @@ import {
   SwapOutlined,
   TagsOutlined,
 } from "@ant-design/icons";
-import { Badge, Button, MenuProps } from "antd";
-import { Menu } from "antd";
+import { MenuProps } from "antd";
+import { Menu, theme } from "antd";
 import { useRouter } from "next/router";
 import { useRecoilValue } from "recoil";
-import { totalState } from "@/store/total";
+import { themeState, totalState } from "@/store";
+
+const { useToken } = theme;
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -31,12 +33,10 @@ function getItem(
 }
 
 const SiderMenu = () => {
-  const router = useRouter();
+  const themeMode = useRecoilValue(themeState);
   const total = useRecoilValue(totalState);
-
-  const onClick: MenuProps["onClick"] = (e) => {
-    router.push("/" + e.key);
-  };
+  const { token } = useToken();
+  const router = useRouter();
 
   const items: MenuProps["items"] = [
     getItem(
@@ -48,7 +48,13 @@ const SiderMenu = () => {
         }}
       >
         <span>全部</span>
-        <span style={{ color: "rgba(255,255,255,.5)" }}>{total.all}</span>
+        <span
+          style={{
+            color: token.colorTextDescription,
+          }}
+        >
+          {total.all}
+        </span>
       </span>,
       "all",
       <FileImageOutlined />
@@ -62,10 +68,13 @@ const SiderMenu = () => {
   return (
     <>
       <Menu
-        onClick={onClick}
+        style={{ height: "100%", width: "100%" }}
+        onClick={(e) => {
+          router.push("/" + e.key);
+        }}
         defaultSelectedKeys={["all"]}
         mode="vertical"
-        theme="dark"
+        theme={themeMode}
         items={items}
       />
     </>

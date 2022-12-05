@@ -13,3 +13,7 @@ export const selectImages = ({
 }: SelectImagesParam) => {
   return fetch(`${api.host}/images?_page=${_page}&_limit=${_limit}`);
 };
+
+export const selectTags = () => {
+  return fetch(`${api.host}/tags`);
+};

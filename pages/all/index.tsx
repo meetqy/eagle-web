@@ -2,17 +2,27 @@ import { useEffect, useState } from "react";
 import justifyLayout from "justified-layout";
 import { handleImageSrc, selectImages } from "@/hooks";
 import Image from "next/image";
-import { Button, Card } from "antd";
+import { Button, Card, theme } from "antd";
 import { useRecoilState } from "recoil";
-import { totalState } from "@/store/total";
+import { totalState, activeImageState } from "@/store";
+
+const { useToken } = theme;
 
 const Page = () => {
+  const { token } = useToken();
+
   const [total, setTotal] = useRecoilState(totalState);
+  const [_activeImage, setActiveImage] = useRecoilState(activeImageState);
+  const [active, setActive] = useState(-1);
   const [loading, setLoading] = useState(false);
   const [layoutPos, setLayoutPos] = useState<any>();
   const [page, setPage] = useState(1);
   const [data, setData] = useState<API.Image[]>([]);
   const [init, setInit] = useState(true);
+
+  useEffect(() => {
+    setActiveImage(data[active]);
+  }, [active]);
 
   // 请求第一页数据，设置图片总数
   useEffect(() => {
@@ -91,13 +101,17 @@ const Page = () => {
                 position: "absolute",
                 background: `rgb(${image.palettes[0].color}, .25)`,
                 overflow: "hidden",
+                ...(active === i
+                  ? { borderColor: token.colorPrimary, borderWidth: 4 }
+                  : {}),
               }}
+              onClick={() => setActive(i)}
               cover={
                 <Image
                   width={item.width}
                   height={item.height}
                   src={handleImageSrc(image, true)}
-                  alt={handleImageSrc(image, true)}
+                  alt={`${image.id}/${image.name}/${image.ext}`}
                 />
               }
             />
