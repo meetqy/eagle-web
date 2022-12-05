@@ -9,6 +9,13 @@ const {
   images_hostname,
 } = process.env;
 
+console.log({
+  protocol: images_protocol,
+  hostname: images_hostname,
+  port: images_port,
+  pathname: images_pathname,
+});
+
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
