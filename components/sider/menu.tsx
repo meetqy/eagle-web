@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   DeleteOutlined,
   FileImageOutlined,
@@ -9,8 +9,8 @@ import {
 import { MenuProps } from "antd";
 import { Menu, theme } from "antd";
 import { useRouter } from "next/router";
-import { useRecoilValue } from "recoil";
-import { themeState, totalState } from "@/store";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { activeMenuState, themeState, totalState } from "@/store";
 
 const { useToken } = theme;
 
@@ -33,6 +33,7 @@ function getItem(
 }
 
 const SiderMenu = () => {
+  const [_menu, setMenu] = useRecoilState(activeMenuState);
   const themeMode = useRecoilValue(themeState);
   const total = useRecoilValue(totalState);
   const { token } = useToken();
@@ -47,7 +48,7 @@ const SiderMenu = () => {
           justifyContent: "space-between",
         }}
       >
-        <span>全部</span>
+        <label>全部</label>
         <span
           style={{
             color: token.colorTextDescription,
@@ -59,10 +60,34 @@ const SiderMenu = () => {
       "all",
       <FileImageOutlined />
     ),
-    getItem("未标签", "not-tag", <FileUnknownOutlined />),
-    getItem("随机模式", "random", <SwapOutlined />),
-    getItem("标签管理", "tags", <TagsOutlined />),
-    getItem("回收站", "recycle", <DeleteOutlined />),
+    getItem(
+      <span>
+        <label>未标签</label>
+      </span>,
+      "not-tag",
+      <FileUnknownOutlined />
+    ),
+    getItem(
+      <span>
+        <label>随机模式</label>
+      </span>,
+      "random",
+      <SwapOutlined />
+    ),
+    getItem(
+      <span>
+        <label>标签管理</label>
+      </span>,
+      "tags",
+      <TagsOutlined />
+    ),
+    getItem(
+      <span>
+        <label>回收站</label>
+      </span>,
+      "recycle",
+      <DeleteOutlined />
+    ),
   ];
 
   return (
@@ -70,6 +95,14 @@ const SiderMenu = () => {
       <Menu
         style={{ height: "100%", width: "100%" }}
         onClick={(e) => {
+          const name = (e.domEvent.target as HTMLElement).querySelector(
+            "label"
+          )?.innerText;
+
+          setMenu({
+            name: name || "",
+            key: e.key,
+          });
           router.push("/" + e.key);
         }}
         defaultSelectedKeys={["all"]}
