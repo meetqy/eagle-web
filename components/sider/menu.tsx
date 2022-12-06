@@ -59,8 +59,10 @@ const SiderMenu = () => {
   ]);
 
   useEffect(() => {
-    const route = router.route.replace("/", "");
+    const route = router.route.replace("/", "") || "all";
+
     const index = items.findIndex((item) => item.route === route);
+
     const item = {
       ...items[index],
       count: total[items[index].key as keyof Total],
