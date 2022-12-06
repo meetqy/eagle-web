@@ -1,11 +1,6 @@
 import { handleImageSrc, imageLoader } from "@/hooks";
 import Image from "next/image";
-import {
-  activeImageState,
-  activeMenuState,
-  tagsState,
-  totalState,
-} from "@/store";
+import { activeImageState, activeMenuState, tagsState } from "@/store";
 import { useRecoilValue } from "recoil";
 import { Button, Col, Input, Rate, Row, Select, Tooltip } from "antd";
 import styles from "./basic.module.css";
@@ -13,8 +8,7 @@ import styles from "./basic.module.css";
 const SiderBasic = () => {
   const image = useRecoilValue(activeImageState);
   const tags = useRecoilValue(tagsState);
-  const total = useRecoilValue(totalState);
-  const menu = useRecoilValue(activeMenuState);
+  const activeMenu = useRecoilValue(activeMenuState);
 
   const handleTime = (time: number) => {
     const [date, t] = new Date(time)
@@ -32,11 +26,11 @@ const SiderBasic = () => {
     );
   };
 
-  if (!image)
+  if (!image) {
     return (
       <div style={{ padding: 20 }}>
         <Row>
-          <Input disabled value={menu.name}></Input>
+          <Input disabled value={activeMenu?.name}></Input>
         </Row>
         <Row style={{ marginTop: 20 }}>
           <Col>基本信息</Col>
@@ -44,11 +38,12 @@ const SiderBasic = () => {
         <div className={styles.baseInfo} style={{ marginTop: 20 }}>
           <Row align="middle">
             <Col span={8}>文件数</Col>
-            <Col>{total.all}</Col>
+            <Col>{activeMenu?.count}</Col>
           </Row>
         </div>
       </div>
     );
+  }
 
   return (
     <div style={{ padding: 20 }}>

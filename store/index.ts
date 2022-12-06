@@ -1,16 +1,5 @@
 import { atom } from "recoil";
 
-// 图片数量
-export const totalState = atom({
-  key: "totalState",
-  default: {
-    all: 0,
-    notTag: 0,
-    tags: 0,
-    recycle: 0,
-  },
-});
-
 // 当前选中图片
 export const activeImageState = atom({
   key: "activeImageState",
@@ -29,11 +18,25 @@ export const tagsState = atom({
   default: undefined as EagleWeb.Tags | undefined,
 });
 
+export interface Total {
+  all: number;
+  notTag: number;
+  tags: number;
+  recycle: number;
+}
+// 图片数量
+export const totalState = atom({
+  key: "totalState",
+  default: {
+    all: 0,
+    notTag: 0,
+    tags: 0,
+    recycle: 0,
+  } as Total,
+});
+
 // 当前选中的菜单
 export const activeMenuState = atom({
   key: "activeMenuState",
-  default: {
-    key: "all",
-    name: "全部",
-  },
+  default: undefined as EagleWeb.MenuItem | undefined,
 });

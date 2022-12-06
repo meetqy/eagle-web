@@ -38,4 +38,12 @@ namespace EagleWeb {
     // 常用
     starredTags: string[];
   }
+
+  interface MenuItem {
+    key: string;
+    name: string;
+    route: string;
+    icon: JSX.Element;
+    count: number;
+  }
 }
