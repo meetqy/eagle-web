@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DeleteOutlined,
   FileImageOutlined,
@@ -20,7 +20,7 @@ const SiderMenu = () => {
   const { token } = useToken();
   const router = useRouter();
 
-  const items: EagleWeb.MenuItem[] = [
+  const [items, setItems] = useState<EagleWeb.MenuItem[]>([
     {
       key: "all",
       name: "全部",
@@ -56,13 +56,21 @@ const SiderMenu = () => {
       icon: <DeleteOutlined />,
       count: total.recycle,
     },
-  ];
+  ]);
 
   useEffect(() => {
     const route = router.route.replace("/", "");
-    const menu = items.find((item) => item.route === route);
-    setActiveMneu(menu);
-  }, [router]);
+    const index = items.findIndex((item) => item.route === route);
+    const item = {
+      ...items[index],
+      count: total[items[index].key as keyof Total],
+    };
+
+    items[index] = item;
+
+    setActiveMneu(item);
+    setItems([...items]);
+  }, [total]);
 
   return (
     <>
@@ -103,23 +111,7 @@ const SiderMenu = () => {
             ),
           };
         })}
-      >
-        {/* {items.map((item) => (
-          <Menu.Item key={item.key}>
-            <label style={{ width: "80%", display: "inline-flex" }}>
-              <span style={{ marginRight: 10 }}>{item.icon}</span>
-              {item.name}
-            </label>
-            <span
-              style={{
-                color: token.colorTextDescription,
-              }}
-            >
-              {item.count}
-            </span>
-          </Menu.Item>
-        ))} */}
-      </Menu>
+      />
     </>
   );
 };

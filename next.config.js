@@ -22,7 +22,7 @@ const nextConfig = {
       {
         protocol: images_protocol,
         hostname: images_hostname,
-        port: images_port,
+        port: images_port || "",
       },
     ],
     unoptimized: true,
