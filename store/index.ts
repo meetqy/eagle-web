@@ -14,7 +14,7 @@ export const totalState = atom({
 // 当前选中图片
 export const activeImageState = atom({
   key: "activeImageState",
-  default: undefined as API.Image | undefined,
+  default: undefined as EagleWeb.Image | undefined,
 });
 
 // 主题
@@ -26,7 +26,7 @@ export const themeState = atom({
 // 所有标签
 export const tagsState = atom({
   key: "tagsState",
-  default: undefined as API.Tags | undefined,
+  default: undefined as EagleWeb.Tags | undefined,
 });
 
 // 当前选中的菜单

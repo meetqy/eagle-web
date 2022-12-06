@@ -17,7 +17,7 @@ const Page = () => {
   const [loading, setLoading] = useState(false);
   const [layoutPos, setLayoutPos] = useState<any>();
   const [page, setPage] = useState(1);
-  const [data, setData] = useState<API.Image[]>([]);
+  const [data, setData] = useState<EagleWeb.Image[]>([]);
   const [init, setInit] = useState(true);
 
   useEffect(() => {

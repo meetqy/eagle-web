@@ -1,4 +1,4 @@
-namespace API {
+namespace EagleWeb {
   interface Image {
     id: string;
     name: string;
@@ -28,6 +28,9 @@ namespace API {
   interface Env {
     host: string;
     limit: number;
+    images_protocol: string;
+    images_hostname: string;
+    images_port: string;
   }
 
   interface Tags {

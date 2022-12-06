@@ -1,24 +1,19 @@
 /** @type {import('next').NextConfig} */
 
-const { api_host, api_limit, images_protocol, images_hostname } = process.env;
-
-console.log({
-  protocol: images_protocol,
-  hostname: images_hostname,
-});
-
-// if (process.env.NODE_ENV === "development") {
-//   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-// }
+const { api_host, api_limit, images_protocol, images_hostname, images_port } =
+  process.env;
 
 const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
 
   publicRuntimeConfig: {
-    api: {
+    env: {
       host: api_host,
       limit: api_limit,
+      images_protocol,
+      images_hostname,
+      images_port,
     },
   },
 
@@ -27,6 +22,7 @@ const nextConfig = {
       {
         protocol: images_protocol,
         hostname: images_hostname,
+        port: images_port,
       },
     ],
     unoptimized: true,

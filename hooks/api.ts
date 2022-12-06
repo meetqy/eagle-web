@@ -5,15 +5,15 @@ interface SelectImagesParam {
   _limit?: number;
 }
 
-const { api }: { api: API.Env } = getConfig().publicRuntimeConfig;
+const { env }: { env: EagleWeb.Env } = getConfig().publicRuntimeConfig;
 
 export const selectImages = ({
   _page = 1,
-  _limit = api.limit,
+  _limit = env.limit,
 }: SelectImagesParam) => {
-  return fetch(`${api.host}/images?_page=${_page}&_limit=${_limit}`);
+  return fetch(`${env.host}/images?_page=${_page}&_limit=${_limit}`);
 };
 
 export const selectTags = () => {
-  return fetch(`${api.host}/tags`);
+  return fetch(`${env.host}/tags`);
 };
