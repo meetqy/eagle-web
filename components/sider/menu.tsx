@@ -3,7 +3,6 @@ import {
   DeleteOutlined,
   FileImageOutlined,
   FileUnknownOutlined,
-  SwapOutlined,
   TagsOutlined,
 } from "@ant-design/icons";
 import { Col, Menu, Row, theme } from "antd";

@@ -95,7 +95,7 @@ const Page = () => {
           return (
             <Card
               hoverable
-              key={i}
+              key={image.id}
               style={{
                 ...item,
                 position: "absolute",

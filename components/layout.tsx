@@ -26,12 +26,18 @@ export default function App({ children }: { children: JSX.Element }) {
 
   return (
     <ConfigProvider locale={zhCN}>
-      <Layout style={{ width: "100vw", height: "100vh" }}>
+      <Layout
+        style={{
+          width: "100%",
+          height: "100%",
+        }}
+        hasSider
+      >
         <Sider width={240} style={{ padding: 10 }} theme={themeMode}>
           <SiderMenu />
         </Sider>
         <Content
-          className="scroll-bar"
+          className="scroll-bar main"
           style={{
             position: "relative",
             overflowY: "auto",
