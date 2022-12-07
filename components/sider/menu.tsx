@@ -36,13 +36,6 @@ const SiderMenu = () => {
       count: total.notTag,
     },
     {
-      key: "random",
-      name: "随机模式",
-      route: "random",
-      icon: <SwapOutlined />,
-      count: 0,
-    },
-    {
       key: "tags",
       name: "标签管理",
       route: "tags",

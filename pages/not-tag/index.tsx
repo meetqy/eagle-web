@@ -40,8 +40,8 @@ const Page = () => {
   // 加载更多
   const onLoadMore = (_page: number, fn?: (notTag: number) => void) => {
     setLoading(true);
-    // tags_like=\S 查询未标签的图片
-    selectImages({ _page, rules: `tags_like=\\S` })
+    // tags_null 查询未标签的图片 json-server自定义API
+    selectImages({ _page, rules: `tags_null` })
       .then((res) => {
         const totalCount = Number(res.headers.get("X-Total-Count"));
         fn && fn(totalCount);
@@ -69,7 +69,7 @@ const Page = () => {
     );
   }, [data]);
 
-  const loadMore = (
+  const loadMore = total.notTag > data.length && (
     <div style={{ textAlign: "center" }}>
       <Button
         onClick={() => onLoadMore(page + 1)}

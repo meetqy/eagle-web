@@ -68,7 +68,7 @@ const Page = () => {
     );
   }, [data]);
 
-  const loadMore = (
+  const loadMore = total.all > data.length && (
     <div style={{ textAlign: "center" }}>
       <Button
         onClick={() => onLoadMore(page + 1)}
