@@ -30,7 +30,7 @@ const TagsMenu = () => {
     if (name != active) {
       setActive([name as string]);
     }
-  }, [name]);
+  }, [active, name]);
 
   // 已分类标签
   const [categoryTags, setCategoryTags] = useState<string[]>([]);

@@ -13,20 +13,22 @@ const { Sider, Content } = Layout;
 export default function App({ children }: { children: JSX.Element }) {
   const themeMode = useRecoilValue(themeState);
   const [tags, setTags] = useRecoilState(tagsState);
-  const [_metadata, setMetadata] = useRecoilState(metadataState);
+  const [metadata, setMetadata] = useRecoilState(metadataState);
   const activeMenu = useRecoilValue(activeMenuState);
 
   useEffect(() => {
-    if (tags) return;
+    if (!tags) {
+      selectTags()
+        .then((res) => res.json())
+        .then((res) => setTags(res));
+    }
 
-    selectTags()
-      .then((res) => res.json())
-      .then((res) => setTags(res));
-
-    selectMetadata()
-      .then((res) => res.json())
-      .then((res) => setMetadata(res));
-  }, [tags]);
+    if (!metadata) {
+      selectMetadata()
+        .then((res) => res.json())
+        .then((res) => setMetadata(res));
+    }
+  }, [tags, metadata, setTags, setMetadata]);
 
   return (
     <>
