@@ -6,6 +6,7 @@ import {
   TagFilled,
 } from "@ant-design/icons";
 import { Col, Menu, Row, theme } from "antd";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 
@@ -21,6 +22,7 @@ const TagsMenu = () => {
   const metadata = useRecoilValue(metadataState);
   const { token } = theme.useToken();
   const [active, setActive] = useState<string[]>();
+  const router = useRouter();
 
   // 已分类标签
   const [categoryTags, setCategoryTags] = useState<string[]>([]);
@@ -52,8 +54,9 @@ const TagsMenu = () => {
   const [items, setItems] = useState<TagItem[]>();
 
   useEffect(() => {
-    if (tags) {
+    if (categoryTags && tags) {
       const { historyTags, starredTags } = tags;
+
       setItems([
         {
           icon: <AppstoreAddOutlined />,
@@ -65,17 +68,24 @@ const TagsMenu = () => {
           icon: <QuestionCircleOutlined />,
           title: "未分类",
           key: "not-category",
-          count: historyTags.length - categoryTags.length,
+          count: historyTags.length - categoryTags.length - starredTags.length,
         },
         {
           icon: <StarOutlined />,
           title: "常用标签",
           key: "starred-tags",
-          count: starredTags.length || 0,
+          count: starredTags.length,
         },
       ]);
     }
-  }, [tags]);
+  }, [tags, categoryTags]);
+
+  // 监听当前选中的菜单
+  useEffect(() => {
+    if (active) {
+      router.push("/tags/" + active);
+    }
+  }, [active]);
 
   // 标签群组
   const tagsGroupsElement = () => {

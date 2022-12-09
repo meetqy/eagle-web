@@ -1,6 +1,5 @@
 import { tagsState, totalState } from "@/store";
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
-import { Button, Col, Row } from "antd";
+import { Col, Row } from "antd";
 import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 
@@ -18,11 +17,7 @@ const TagsHeader = () => {
   }, [tags]);
 
   return (
-    <Row gutter={[10, 0]} style={{ padding: "0 10px" }}>
-      <Col>
-        <Button icon={<LeftOutlined />} type="text"></Button>
-        <Button icon={<RightOutlined />} type="text"></Button>
-      </Col>
+    <Row gutter={[10, 0]} style={{ padding: "0 20px" }}>
       <Col>标签管理({tags?.historyTags.length})</Col>
     </Row>
   );
