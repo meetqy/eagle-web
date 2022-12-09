@@ -26,6 +26,7 @@ const SiderMenu = () => {
       route: "all",
       icon: <FileImageOutlined />,
       count: total.all,
+      basic: false,
     },
     {
       key: "notTag",
@@ -33,6 +34,7 @@ const SiderMenu = () => {
       route: "not-tag",
       icon: <FileUnknownOutlined />,
       count: total.notTag,
+      basic: false,
     },
     {
       key: "tags",
@@ -40,6 +42,7 @@ const SiderMenu = () => {
       route: "tags",
       icon: <TagsOutlined />,
       count: total.tags,
+      basic: true,
     },
     {
       key: "recycle",
@@ -47,6 +50,7 @@ const SiderMenu = () => {
       route: "recycle",
       icon: <DeleteOutlined />,
       count: total.recycle,
+      basic: false,
     },
   ]);
 

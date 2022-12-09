@@ -45,5 +45,7 @@ namespace EagleWeb {
     route: string;
     icon: JSX.Element;
     count: number;
+    // 基础信息 collapsed 状态
+    basic: boolean;
   }
 }

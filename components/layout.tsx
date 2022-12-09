@@ -1,5 +1,5 @@
 import { selectTags } from "@/hooks";
-import { tagsState, themeState } from "@/store";
+import { activeMenuState, tagsState, themeState } from "@/store";
 import { Layout, ConfigProvider } from "antd";
 import zhCN from "antd/locale/zh_CN";
 import { useEffect } from "react";
@@ -12,6 +12,7 @@ const { Sider, Content } = Layout;
 export default function App({ children }: { children: JSX.Element }) {
   const themeMode = useRecoilValue(themeState);
   const [tags, setTags] = useRecoilState(tagsState);
+  const activeMenu = useRecoilValue(activeMenuState);
 
   useEffect(() => {
     if (tags) return;
@@ -46,7 +47,12 @@ export default function App({ children }: { children: JSX.Element }) {
         >
           {children}
         </Content>
-        <Sider width={240} theme={themeMode}>
+        <Sider
+          collapsed={activeMenu?.basic}
+          collapsedWidth={0}
+          width={240}
+          theme={themeMode}
+        >
           <SiderBasic />
         </Sider>
       </Layout>
