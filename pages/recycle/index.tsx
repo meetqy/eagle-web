@@ -20,10 +20,6 @@ const Page = () => {
   const [data, setData] = useState<EagleWeb.Image[]>([]);
   const [init, setInit] = useState(true);
 
-  useEffect(() => {
-    setActiveImage(data[active]);
-  }, [active]);
-
   // 请求第一页数据，设置图片总数
   useEffect(() => {
     if (!init) return;
@@ -58,8 +54,7 @@ const Page = () => {
   useEffect(() => {
     setLayoutPos(
       justifyLayout([...data], {
-        containerWidth: document.querySelector(".ant-layout-content.main")
-          ?.clientWidth,
+        containerWidth: document.body.clientWidth - 480,
         targetRowHeight: 260,
         boxSpacing: {
           horizontal: 10,
@@ -110,7 +105,10 @@ const Page = () => {
                   : {}),
               }}
               bodyStyle={{ padding: 0, ...item }}
-              onClick={() => setActive(i)}
+              onClick={() => {
+                setActive(i);
+                setActiveImage(data[active]);
+              }}
             >
               <Image
                 priority

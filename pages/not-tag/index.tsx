@@ -20,10 +20,6 @@ const Page = () => {
   const [data, setData] = useState<EagleWeb.Image[]>([]);
   const [init, setInit] = useState(true);
 
-  useEffect(() => {
-    setActiveImage(data[active]);
-  }, [active]);
-
   // 请求第一页数据，设置图片总数
   useEffect(() => {
     if (!init) return;
@@ -109,7 +105,10 @@ const Page = () => {
                   : {}),
               }}
               bodyStyle={{ padding: 0, ...item }}
-              onClick={() => setActive(i)}
+              onClick={() => {
+                setActive(i);
+                setActiveImage(data[i]);
+              }}
             >
               <Image
                 priority
