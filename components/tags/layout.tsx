@@ -29,7 +29,17 @@ export default function TagsLayout({ children }: { children: JSX.Element }) {
           <Sider width={240} theme={themeMode}>
             <TagsMenu />
           </Sider>
-          <Content>{children}</Content>
+          <Content
+            className="scroll-bar main"
+            style={{
+              position: "relative",
+              overflowY: "auto",
+              overflowX: "hidden",
+              padding: 20,
+            }}
+          >
+            {children}
+          </Content>
         </Layout>
       </Layout>
     </>
