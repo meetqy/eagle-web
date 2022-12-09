@@ -18,6 +18,12 @@ export const tagsState = atom({
   default: undefined as EagleWeb.Tags | undefined,
 });
 
+// metadata
+export const metadataState = atom({
+  key: "metadataState",
+  default: undefined as EagleWeb.Metadata | undefined,
+});
+
 export interface Total {
   all: number;
   notTag: number;

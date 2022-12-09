@@ -48,4 +48,32 @@ namespace EagleWeb {
     // 基础信息 collapsed 状态
     basic: boolean;
   }
+
+  export interface Metadata {
+    folders: Folder[];
+    smartFolders: any[];
+    quickAccess: any[];
+    tagsGroups: MetadataTagsGroup[];
+    modificationTime: number;
+    applicationVersion: string;
+  }
+
+  export interface MetadataFolder {
+    id: string;
+    name: string;
+    description: string;
+    children: any[];
+    modificationTime: number;
+    tags: any[];
+    iconColor: string;
+    password: string;
+    passwordTips: string;
+  }
+
+  export interface MetadataTagsGroup {
+    id: string;
+    name: string;
+    tags: string[];
+    color: string;
+  }
 }

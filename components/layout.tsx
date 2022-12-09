@@ -1,5 +1,5 @@
-import { selectTags } from "@/hooks";
-import { activeMenuState, tagsState, themeState } from "@/store";
+import { selectMetadata, selectTags } from "@/hooks";
+import { activeMenuState, metadataState, tagsState, themeState } from "@/store";
 import { Layout, ConfigProvider } from "antd";
 import zhCN from "antd/locale/zh_CN";
 import { useEffect } from "react";
@@ -12,17 +12,19 @@ const { Sider, Content } = Layout;
 export default function App({ children }: { children: JSX.Element }) {
   const themeMode = useRecoilValue(themeState);
   const [tags, setTags] = useRecoilState(tagsState);
+  const [_metadata, setMetadata] = useRecoilState(metadataState);
   const activeMenu = useRecoilValue(activeMenuState);
 
   useEffect(() => {
     if (tags) return;
+
     selectTags()
-      .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        setTags(res);
-      });
+      .then((res) => res.json())
+      .then((res) => setTags(res));
+
+    selectMetadata()
+      .then((res) => res.json())
+      .then((res) => setMetadata(res));
   }, [tags]);
 
   return (
