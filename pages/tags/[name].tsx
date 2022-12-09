@@ -3,7 +3,7 @@ import { pinyin } from "@/hooks";
 import { metadataState, tagsState } from "@/store";
 import { Button, Col, Divider, Row, Typography } from "antd";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRecoilValue } from "recoil";
 
 const { Title, Text } = Typography;
@@ -13,6 +13,7 @@ type routeName = "label" | "not-category" | "starred-tags";
 export default function TagsPageName() {
   const router = useRouter();
   const name = router.query.name as routeName;
+  const group = router.query.group || false;
   const tags = useRecoilValue(tagsState);
   const metadata = useRecoilValue(metadataState);
   const [tagsCollection, setTagsCollection] = useState<{
@@ -58,6 +59,7 @@ export default function TagsPageName() {
     }
   }, [tags, metadata, name, tagsCollection]);
 
+  // 常用标签
   useEffect(() => {
     if (tagsCollection["starred-tags"]) return;
 
@@ -70,6 +72,23 @@ export default function TagsPageName() {
       });
     }
   }, [name, tags, tagsCollection]);
+
+  // 标签群组
+  const tagGroup = useMemo(() => {
+    if (metadata && group) {
+      const { tagsGroups } = metadata;
+      const item = tagsGroups.find((item) => item.id === name);
+      if (item) {
+        let json: { [key: string]: string[] } = {};
+        json[item.name] = item.tags;
+        return json;
+      }
+
+      return;
+    }
+
+    return;
+  }, [metadata, name, group]);
 
   /**
    * 数组转json 首字母开头作为分组
@@ -97,8 +116,7 @@ export default function TagsPageName() {
     return json;
   };
 
-  const tagsContentElement = () => {
-    const tagJson = tagsCollection[name] || {};
+  const tagsContentElement = (tagJson: { [key: string]: string[] }) => {
     const result = Object.keys(tagJson);
     if (!result.length) return;
 
@@ -131,7 +149,9 @@ export default function TagsPageName() {
 
   return (
     <TagsLayout>
-      <>{tagsContentElement()}</>
+      <>
+        {tagsContentElement(tagGroup ? tagGroup : tagsCollection[name] || {})}
+      </>
     </TagsLayout>
   );
 }

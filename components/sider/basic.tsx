@@ -1,6 +1,12 @@
 import { handleImageSrc, imageLoader } from "@/hooks";
 import Image from "next/image";
-import { activeImageState, activeMenuState, tagsState } from "@/store";
+import {
+  activeImageState,
+  activeMenuState,
+  tagsState,
+  Total,
+  totalState,
+} from "@/store";
 import { useRecoilValue } from "recoil";
 import { Button, Col, Input, Rate, Row, Select, Tooltip } from "antd";
 import styles from "./basic.module.css";
@@ -9,6 +15,7 @@ const SiderBasic = () => {
   const image = useRecoilValue(activeImageState);
   const tags = useRecoilValue(tagsState);
   const activeMenu = useRecoilValue(activeMenuState);
+  const total = useRecoilValue(totalState);
 
   const handleTime = (time: number) => {
     const [date, t] = new Date(time)
@@ -38,7 +45,7 @@ const SiderBasic = () => {
         <div className={styles.baseInfo} style={{ marginTop: 20 }}>
           <Row align="middle">
             <Col span={8}>文件数</Col>
-            <Col>{activeMenu?.count}</Col>
+            <Col>{total[activeMenu?.key as keyof Total]}</Col>
           </Row>
         </div>
       </div>

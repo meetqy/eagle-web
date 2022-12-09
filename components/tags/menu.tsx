@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { Col, Menu, Row, theme } from "antd";
 import { useRouter } from "next/router";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 
 interface TagItem {
@@ -88,9 +88,9 @@ const TagsMenu = () => {
     }
   }, [tags, categoryTags]);
 
-  const goTags = (key: string) => {
+  const goTags = (key: string, isGroup: boolean = false) => {
     setActive([key]);
-    router.push(`/tags/${key}`);
+    router.push(`/tags/${key}${isGroup ? "?group=true" : ""}`);
   };
 
   // 标签群组
@@ -104,7 +104,7 @@ const TagsMenu = () => {
         </p>
         <Menu
           selectedKeys={active}
-          onSelect={(e) => goTags(e.key)}
+          onSelect={(e) => goTags(e.key, true)}
           style={{ padding: 10 }}
           items={tagsGroupsMenu.map((item) => {
             return {
