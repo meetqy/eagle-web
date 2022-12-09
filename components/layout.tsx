@@ -34,7 +34,7 @@ export default function App({ children }: { children: JSX.Element }) {
         }}
         hasSider
       >
-        <Sider width={240} theme={themeMode}>
+        <Sider width={240} theme={themeMode} className="sider-menu">
           <SiderMenu />
         </Sider>
         <Content
@@ -48,6 +48,7 @@ export default function App({ children }: { children: JSX.Element }) {
           {children}
         </Content>
         <Sider
+          className="sider-basic"
           collapsed={activeMenu?.basic}
           collapsedWidth={0}
           width={240}

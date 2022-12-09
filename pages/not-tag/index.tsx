@@ -58,8 +58,7 @@ const Page = () => {
   useEffect(() => {
     setLayoutPos(
       justifyLayout([...data], {
-        containerWidth: document.querySelector(".ant-layout-content.main")
-          ?.clientWidth,
+        containerWidth: document.body.clientWidth - 480,
         targetRowHeight: 260,
         boxSpacing: {
           horizontal: 10,

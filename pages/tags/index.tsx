@@ -16,7 +16,8 @@ export default function RandomPage() {
       <Layout style={{ height: "100%" }}>
         <Header
           style={{
-            height: 40,
+            height: 44,
+            lineHeight: "44px",
             backgroundColor: token.colorBgContainer,
             borderBottom: `1px solid ${token.colorBorder}`,
             padding: 0,
