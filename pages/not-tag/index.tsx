@@ -31,7 +31,7 @@ const Page = () => {
     onLoadMore(1, (notTag) => {
       setTotal({
         ...total,
-        notTag,
+        "not-tag": notTag,
       });
     });
     setInit(false);
@@ -68,7 +68,7 @@ const Page = () => {
     );
   }, [data]);
 
-  const loadMore = total.notTag > data.length && (
+  const loadMore = total["not-tag"] > data.length && (
     <div style={{ textAlign: "center" }}>
       <Button
         onClick={() => onLoadMore(page + 1)}

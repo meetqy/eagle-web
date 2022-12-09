@@ -26,7 +26,7 @@ export const metadataState = atom({
 
 export interface Total {
   all: number;
-  notTag: number;
+  "not-tag": number;
   tags: number;
   recycle: number;
 }
@@ -35,7 +35,7 @@ export const totalState = atom({
   key: "totalState",
   default: {
     all: 0,
-    notTag: 0,
+    "not-tag": 0,
     tags: 0,
     recycle: 0,
   } as Total,

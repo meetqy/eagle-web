@@ -23,28 +23,24 @@ const SiderMenu = () => {
     {
       key: "all",
       name: "全部",
-      route: "all",
       icon: <FileImageOutlined />,
       basic: false,
     },
     {
-      key: "notTag",
+      key: "not-tag",
       name: "未标签",
-      route: "not-tag",
       icon: <FileUnknownOutlined />,
       basic: false,
     },
     {
       key: "tags",
       name: "标签管理",
-      route: "tags",
       icon: <TagsOutlined />,
       basic: true,
     },
     {
       key: "recycle",
       name: "回收站",
-      route: "recycle",
       icon: <DeleteOutlined />,
       basic: false,
     },
@@ -52,8 +48,8 @@ const SiderMenu = () => {
 
   useEffect(() => {
     const route = router.route.replace("/", "") || "all";
-    if (route != activeMenu?.route) {
-      const index = items.findIndex((item) => route.includes(item.route));
+    if (route != activeMenu?.key) {
+      const index = items.findIndex((item) => route.includes(item.key));
 
       setActiveMneu(items[index]);
     }
@@ -70,10 +66,10 @@ const SiderMenu = () => {
           const menu = items.find((v) => v.key === item.key);
           setActiveMneu(menu);
 
-          if (menu?.route === "tags") {
-            router.push("/" + menu?.route + "/label");
+          if (menu?.key === "tags") {
+            router.push("/" + menu?.key + "/label");
           } else {
-            router.push("/" + menu?.route);
+            router.push("/" + menu?.key);
           }
         }}
         items={items.map((item) => {
