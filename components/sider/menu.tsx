@@ -25,7 +25,6 @@ const SiderMenu = () => {
       name: "全部",
       route: "all",
       icon: <FileImageOutlined />,
-      count: total.all,
       basic: false,
     },
     {
@@ -33,7 +32,6 @@ const SiderMenu = () => {
       name: "未标签",
       route: "not-tag",
       icon: <FileUnknownOutlined />,
-      count: total.notTag,
       basic: false,
     },
     {
@@ -41,7 +39,6 @@ const SiderMenu = () => {
       name: "标签管理",
       route: "tags",
       icon: <TagsOutlined />,
-      count: total.tags,
       basic: true,
     },
     {
@@ -49,26 +46,18 @@ const SiderMenu = () => {
       name: "回收站",
       route: "recycle",
       icon: <DeleteOutlined />,
-      count: total.recycle,
       basic: false,
     },
   ]);
 
   useEffect(() => {
     const route = router.route.replace("/", "") || "all";
+    if (route != activeMenu?.route) {
+      const index = items.findIndex((item) => route.includes(item.route));
 
-    const index = items.findIndex((item) => route.includes(item.route));
-
-    const item = {
-      ...items[index],
-      count: total[items[index].key as keyof Total],
-    };
-
-    items[index] = item;
-
-    setActiveMneu(item);
-    setItems([...items]);
-  }, [total]);
+      setActiveMneu(items[index]);
+    }
+  }, [router.route, setActiveMneu, items, activeMenu]);
 
   return (
     <>
@@ -107,7 +96,7 @@ const SiderMenu = () => {
                       color: token.colorTextDescription,
                     }}
                   >
-                    {item.count}
+                    {total[item.key as keyof Total]}
                   </span>
                 </Col>
               </Row>

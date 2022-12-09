@@ -41,7 +41,7 @@ export const totalState = atom({
   } as Total,
 });
 
-// 当前选中的菜单
+// 当前选中的菜单  基础信息中需要显示菜单标题
 export const activeMenuState = atom({
   key: "activeMenuState",
   default: undefined as EagleWeb.MenuItem | undefined,
