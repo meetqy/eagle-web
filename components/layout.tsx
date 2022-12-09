@@ -34,7 +34,7 @@ export default function App({ children }: { children: JSX.Element }) {
         }}
         hasSider
       >
-        <Sider width={240} style={{ padding: 10 }} theme={themeMode}>
+        <Sider width={240} theme={themeMode}>
           <SiderMenu />
         </Sider>
         <Content

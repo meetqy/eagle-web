@@ -73,7 +73,7 @@ const SiderMenu = () => {
   return (
     <>
       <Menu
-        style={{ height: "100%", width: "100%" }}
+        style={{ height: "100%", width: "100%", padding: 10 }}
         mode="vertical"
         theme={themeMode}
         selectedKeys={activeMenu ? [activeMenu.key] : []}
