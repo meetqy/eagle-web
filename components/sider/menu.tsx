@@ -80,7 +80,12 @@ const SiderMenu = () => {
         onSelect={(item) => {
           const menu = items.find((v) => v.key === item.key);
           setActiveMneu(menu);
-          router.push("/" + menu?.route);
+
+          if (menu?.route === "tags") {
+            router.push("/" + menu?.route + "/label");
+          } else {
+            router.push("/" + menu?.route);
+          }
         }}
         items={items.map((item) => {
           return {

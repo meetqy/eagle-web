@@ -1,5 +1,5 @@
-import TagsHeader from "@/components/tags/header";
-import TagsMenu from "@/components/tags/menu";
+import TagsHeader from "./header";
+import TagsMenu from "./menu";
 import { themeState } from "@/store";
 import { Layout, theme } from "antd";
 import { useRecoilValue } from "recoil";

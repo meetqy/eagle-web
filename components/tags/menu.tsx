@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { Col, Menu, Row, theme } from "antd";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 
 interface TagItem {
@@ -23,6 +23,14 @@ const TagsMenu = () => {
   const { token } = theme.useToken();
   const [active, setActive] = useState<string[]>();
   const router = useRouter();
+
+  const { name } = router.query;
+
+  useEffect(() => {
+    if (name != active) {
+      setActive([name as string]);
+    }
+  }, [name]);
 
   // 已分类标签
   const [categoryTags, setCategoryTags] = useState<string[]>([]);
@@ -80,12 +88,10 @@ const TagsMenu = () => {
     }
   }, [tags, categoryTags]);
 
-  // 监听当前选中的菜单
-  useEffect(() => {
-    if (active) {
-      router.push("/tags/" + active);
-    }
-  }, [active]);
+  const goTags = (key: string) => {
+    setActive([key]);
+    router.push(`/tags/${key}`);
+  };
 
   // 标签群组
   const tagsGroupsElement = () => {
@@ -98,7 +104,7 @@ const TagsMenu = () => {
         </p>
         <Menu
           selectedKeys={active}
-          onSelect={(e) => setActive([e.key])}
+          onSelect={(e) => goTags(e.key)}
           style={{ padding: 10 }}
           items={tagsGroupsMenu.map((item) => {
             return {
@@ -136,7 +142,7 @@ const TagsMenu = () => {
     <>
       <Menu
         selectedKeys={active}
-        onSelect={(e) => setActive([e.key])}
+        onSelect={(e) => goTags(e.key)}
         style={{ padding: 10 }}
         items={
           items
