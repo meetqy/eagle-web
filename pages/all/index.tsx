@@ -1,19 +1,16 @@
 import { useEffect, useState } from "react";
 import justifyLayout from "justified-layout";
-import { handleImageSrc, imageLoader, selectImages } from "@/hooks";
-import Image from "next/image";
-import { Button, Card, Layout, theme } from "antd";
+import { selectImages } from "@/hooks";
+import { Layout, theme } from "antd";
 import { useRecoilState } from "recoil";
-import { totalState, activeImageState } from "@/store";
+import { totalState } from "@/store";
 import LayoutHeader from "@/components/layout-header";
+import LayoutContent from "@/components/layout-content";
 
 const { useToken } = theme;
 
 const Page = () => {
-  const { token } = useToken();
-
   const [total, setTotal] = useRecoilState(totalState);
-  const [activeImage, setActiveImage] = useRecoilState(activeImageState);
   const [loading, setLoading] = useState(false);
   const [layoutPos, setLayoutPos] = useState<any>();
   const [page, setPage] = useState(1);
@@ -63,72 +60,15 @@ const Page = () => {
     );
   }, [data]);
 
-  const loadMore = total.all > data.length && (
-    <div style={{ textAlign: "center" }}>
-      <Button
-        onClick={() => onLoadMore(page + 1)}
-        type="link"
-        disabled={loading}
-      >
-        加载更多
-      </Button>
-    </div>
-  );
-
-  if (!data || !layoutPos) return <></>;
-
   return (
     <Layout>
       <LayoutHeader />
-      <Layout.Content style={{ position: "relative" }}>
-        <div
-          style={{
-            height: layoutPos.containerHeight,
-          }}
-        >
-          {layoutPos.boxes.map((item: any, i: number) => {
-            const image = data[i];
-
-            return (
-              <Card
-                hoverable
-                key={image.id}
-                style={{
-                  ...item,
-                  position: "absolute",
-                  background: `rgb(${image.palettes[0].color}, .25)`,
-                  overflow: "hidden",
-                  ...(activeImage?.id === image.id
-                    ? {
-                        outline: `4px solid ${token.colorPrimary}`,
-                        border: 0,
-                      }
-                    : {}),
-                }}
-                bodyStyle={{ padding: 0, ...item }}
-                onClick={() => {
-                  setActiveImage(data[i]);
-                }}
-              >
-                <Image
-                  priority
-                  width={0}
-                  height={0}
-                  loader={imageLoader}
-                  src={handleImageSrc(image, true)}
-                  alt={`${image.id}/${image.name}/${image.ext}`}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                  }}
-                />
-              </Card>
-            );
-          })}
-        </div>
-
-        <div style={{ paddingBottom: 20 }}>{loadMore}</div>
-      </Layout.Content>
+      <LayoutContent
+        layoutPos={layoutPos}
+        data={data}
+        onLoadmore={() => onLoadMore(page + 1)}
+        loading={loading}
+      />
     </Layout>
   );
 };
