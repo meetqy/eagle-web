@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import justifyLayout from "justified-layout";
 import { handleImageSrc, imageLoader, selectImages } from "@/hooks";
 import Image from "next/image";
-import { Button, Card, theme } from "antd";
+import { Button, Card, Layout, theme } from "antd";
 import { useRecoilState } from "recoil";
 import { totalState, activeImageState } from "@/store";
+import LayoutHeader from "@/components/layout-header";
 
 const { useToken } = theme;
 
@@ -79,56 +80,59 @@ const Page = () => {
   if (!data || !layoutPos) return <></>;
 
   return (
-    <>
-      <div
-        style={{
-          height: layoutPos.containerHeight,
-        }}
-      >
-        {layoutPos.boxes.map((item: any, i: number) => {
-          const image = data[i];
+    <Layout>
+      <LayoutHeader />
+      <Layout.Content style={{ position: "relative" }}>
+        <div
+          style={{
+            height: layoutPos.containerHeight,
+          }}
+        >
+          {layoutPos.boxes.map((item: any, i: number) => {
+            const image = data[i];
 
-          return (
-            <Card
-              hoverable
-              key={i}
-              style={{
-                ...item,
-                position: "absolute",
-                background: `rgb(${image.palettes[0].color}, .25)`,
-                overflow: "hidden",
-                ...(active === i
-                  ? {
-                      outline: `4px solid ${token.colorPrimary}`,
-                      border: 0,
-                    }
-                  : {}),
-              }}
-              bodyStyle={{ padding: 0, ...item }}
-              onClick={() => {
-                setActive(i);
-                setActiveImage(data[i]);
-              }}
-            >
-              <Image
-                priority
-                width={0}
-                height={0}
-                loader={imageLoader}
-                src={handleImageSrc(image, true)}
-                alt={`${image.id}/${image.name}/${image.ext}`}
+            return (
+              <Card
+                hoverable
+                key={image.id}
                 style={{
-                  width: "100%",
-                  height: "100%",
+                  ...item,
+                  position: "absolute",
+                  background: `rgb(${image.palettes[0].color}, .25)`,
+                  overflow: "hidden",
+                  ...(active === i
+                    ? {
+                        outline: `4px solid ${token.colorPrimary}`,
+                        border: 0,
+                      }
+                    : {}),
                 }}
-              />
-            </Card>
-          );
-        })}
-      </div>
+                bodyStyle={{ padding: 0, ...item }}
+                onClick={() => {
+                  setActive(i);
+                  setActiveImage(data[i]);
+                }}
+              >
+                <Image
+                  priority
+                  width={0}
+                  height={0}
+                  loader={imageLoader}
+                  src={handleImageSrc(image, true)}
+                  alt={`${image.id}/${image.name}/${image.ext}`}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                  }}
+                />
+              </Card>
+            );
+          })}
+        </div>
 
-      <div style={{ paddingBottom: 20 }}>{loadMore}</div>
-    </>
+        <div style={{ paddingBottom: 20 }}>{loadMore}</div>
+      </Layout.Content>
+    </Layout>
   );
 };
 

@@ -15,8 +15,8 @@ export default function TagsLayout({ children }: { children: JSX.Element }) {
       <Layout style={{ height: "100%" }}>
         <Header
           style={{
-            height: 44,
-            lineHeight: "44px",
+            height: 36,
+            lineHeight: "36px",
             backgroundColor: token.colorBgContainer,
             borderBottom: `1px solid ${token.colorBorderSecondary}`,
             padding: 0,

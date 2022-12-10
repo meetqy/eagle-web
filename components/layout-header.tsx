@@ -1,5 +1,9 @@
 import { activeMenuState } from "@/store";
-import { CaretDownOutlined, SearchOutlined } from "@ant-design/icons";
+import {
+  CaretDownOutlined,
+  SearchOutlined,
+  SwapOutlined,
+} from "@ant-design/icons";
 import {
   Button,
   Col,
@@ -7,6 +11,7 @@ import {
   Layout,
   Popover,
   Row,
+  Select,
   Slider,
   theme,
   Typography,
@@ -41,7 +46,47 @@ const LayoutHeader = () => {
         </Col>
 
         <Col>
-          <Input placeholder="搜索" size="small" prefix={<SearchOutlined />} />
+          <Row gutter={[10, 0]}>
+            <Col>
+              <Popover
+                trigger="click"
+                content={
+                  <Select
+                    size="small"
+                    style={{ width: 100 }}
+                    placeholder="排序方式"
+                    options={[
+                      {
+                        value: "jack",
+                        label: "创建日期",
+                      },
+                      {
+                        value: "lucy",
+                        label: "修改日期",
+                      },
+                      {
+                        value: "tom",
+                        label: "创建日期",
+                      },
+                    ]}
+                  />
+                }
+              >
+                <Button
+                  icon={<SwapOutlined rotate={90} />}
+                  type="text"
+                  size="small"
+                />
+              </Popover>
+            </Col>
+            <Col>
+              <Input
+                placeholder="搜索"
+                size="small"
+                prefix={<SearchOutlined />}
+              />
+            </Col>
+          </Row>
         </Col>
       </Row>
 

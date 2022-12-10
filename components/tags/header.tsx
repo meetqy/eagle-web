@@ -1,5 +1,5 @@
 import { tagsState, totalState } from "@/store";
-import { Col, Row } from "antd";
+import { Button, Col, Row } from "antd";
 import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 
@@ -18,7 +18,11 @@ const TagsHeader = () => {
 
   return (
     <Row gutter={[10, 0]} style={{ padding: "0 20px" }}>
-      <Col>标签管理({tags?.historyTags.length})</Col>
+      <Col>
+        <Button type="text" style={{ fontWeight: "bold" }} size="small">
+          标签管理({tags?.historyTags.length})
+        </Button>
+      </Col>
     </Row>
   );
 };
