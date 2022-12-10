@@ -1,4 +1,4 @@
-import { activeMenuState } from "@/store";
+import { activeMenuState, orderState, sortState } from "@/store";
 import {
   CaretDownOutlined,
   SearchOutlined,
@@ -10,17 +10,20 @@ import {
   Input,
   Layout,
   Popover,
+  Radio,
   Row,
   Select,
   Slider,
+  Switch,
   theme,
-  Typography,
 } from "antd";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 const LayoutHeader = () => {
   const { token } = theme.useToken();
   const activeMenu = useRecoilValue(activeMenuState);
+  const [order, setOrder] = useRecoilState(orderState);
+  const [sort, setSort] = useRecoilState(sortState);
 
   return (
     <Layout.Header
@@ -42,7 +45,7 @@ const LayoutHeader = () => {
         </Col>
 
         <Col>
-          <Slider max={12} min={1} style={{ width: 120 }} />
+          <Slider max={12} min={1} style={{ width: 120 }} disabled />
         </Col>
 
         <Col>
@@ -51,25 +54,45 @@ const LayoutHeader = () => {
               <Popover
                 trigger="click"
                 content={
-                  <Select
-                    size="small"
-                    style={{ width: 100 }}
-                    placeholder="排序方式"
-                    options={[
-                      {
-                        value: "jack",
-                        label: "创建日期",
-                      },
-                      {
-                        value: "lucy",
-                        label: "修改日期",
-                      },
-                      {
-                        value: "tom",
-                        label: "创建日期",
-                      },
-                    ]}
-                  />
+                  <Row style={{ width: 100 }} gutter={[0, 10]}>
+                    <Col flex={1} style={{ textAlign: "center" }}>
+                      <Radio.Group
+                        optionType="button"
+                        size="small"
+                        value={order}
+                        onChange={(e) => setOrder(e.target.value)}
+                        buttonStyle="solid"
+                        options={[
+                          { label: "升序", value: "asc" },
+                          { label: "降序", value: "desc" },
+                        ]}
+                      />
+                    </Col>
+
+                    <Col flex={1}>
+                      <Select
+                        size="small"
+                        style={{ width: 100 }}
+                        value={sort}
+                        onChange={setSort}
+                        placeholder="排序方式"
+                        options={[
+                          {
+                            value: "modificationTime",
+                            label: "添加日期",
+                          },
+                          {
+                            value: "mtime",
+                            label: "修改日期",
+                          },
+                          {
+                            value: "btime",
+                            label: "创建日期",
+                          },
+                        ]}
+                      />
+                    </Col>
+                  </Row>
                 }
               >
                 <Button
@@ -83,6 +106,7 @@ const LayoutHeader = () => {
               <Input
                 placeholder="搜索"
                 size="small"
+                disabled
                 prefix={<SearchOutlined />}
               />
             </Col>
@@ -109,7 +133,7 @@ const LayoutHeader = () => {
               content={item}
               trigger="click"
             >
-              <Button size="small" type="text">
+              <Button size="small" type="text" disabled>
                 {item} <CaretDownOutlined style={{ fontSize: 10 }} />
               </Button>
             </Popover>

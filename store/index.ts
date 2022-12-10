@@ -46,3 +46,17 @@ export const activeMenuState = atom({
   key: "activeMenuState",
   default: undefined as EagleWeb.MenuItem | undefined,
 });
+
+// 菜单为单位 排序规则
+export const sortState = atom({
+  key: "sortState",
+  default: "modificationTime",
+});
+
+// 升序 降序
+// asc 升序
+// desc 降序
+export const orderState = atom({
+  key: "orderState",
+  default: "desc" as "asc" | "desc",
+});

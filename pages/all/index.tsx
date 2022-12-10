@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import justifyLayout from "justified-layout";
 import { selectImages } from "@/hooks";
 import { Layout } from "antd";
-import { useRecoilState } from "recoil";
-import { totalState } from "@/store";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { orderState, sortState, totalState } from "@/store";
 import LayoutHeader from "@/components/layout-header";
 import LayoutContent from "@/components/layout-content";
 
@@ -13,6 +13,8 @@ const Page = () => {
   const [layoutPos, setLayoutPos] = useState<any>();
   const [page, setPage] = useState(1);
   const [data, setData] = useState<EagleWeb.Image[]>([]);
+  const sort = useRecoilValue(sortState);
+  const order = useRecoilValue(orderState);
 
   // 请求第一页数据，设置图片总数
   useEffect(() => {
@@ -22,19 +24,19 @@ const Page = () => {
         all,
       });
     });
-  }, []);
+  }, [sort, order]);
 
   // 加载更多
   const onLoadMore = (_page: number, fn?: (all: number) => void) => {
     setLoading(true);
-    selectImages({ _page })
+    selectImages({ _page, _sort: sort, _order: order })
       .then((res) => {
         const totalCount = Number(res.headers.get("X-Total-Count"));
         fn && fn(totalCount);
         return res.json();
       })
       .then((v) => {
-        setData((d) => d.concat(v));
+        setData(_page === 1 ? v : (d) => d.concat(v));
         setPage(_page);
         setLoading(false);
       });
