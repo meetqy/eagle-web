@@ -57,6 +57,18 @@ export default function App({ children }: { children: JSX.Element }) {
             }}
           >
             {children}
+            {/* <Layout>
+             
+              <Layout.Header
+                style={{
+                  position: "sticky",
+                  top: 0,
+                  zIndex: 99,
+                  backgroundColor: token.colorBgContainer,
+                }}
+              ></Layout.Header>
+              <Content style={{ position: "relative" }}></Content>
+            </Layout> */}
           </Content>
           <Sider
             className="sider-basic"

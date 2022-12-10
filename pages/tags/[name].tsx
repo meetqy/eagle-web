@@ -116,6 +116,7 @@ export default function TagsPageName() {
     return json;
   };
 
+  // 渲染tags列表
   const tagsContentElement = (tagJson: { [key: string]: string[] }) => {
     const result = Object.keys(tagJson);
     if (!result.length) return;
