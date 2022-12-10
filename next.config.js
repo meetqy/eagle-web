@@ -4,7 +4,7 @@ const { api_host, api_limit, images_protocol, images_hostname, images_port } =
   process.env;
 
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   swcMinify: true,
 
   publicRuntimeConfig: {
