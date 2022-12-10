@@ -14,7 +14,7 @@ const TagsHeader = () => {
         tags: tags.historyTags.length,
       });
     }
-  }, [tags]);
+  }, [setTotal, tags, total]);
 
   return (
     <Row gutter={[10, 0]} style={{ padding: "0 20px" }}>
