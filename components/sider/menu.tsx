@@ -8,12 +8,19 @@ import {
 import { Col, Menu, Row, theme } from "antd";
 import { useRouter } from "next/router";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { activeMenuState, themeState, Total, totalState } from "@/store";
+import {
+  activeImageState,
+  activeMenuState,
+  themeState,
+  Total,
+  totalState,
+} from "@/store";
 
 const { useToken } = theme;
 
 const SiderMenu = () => {
   const [activeMenu, setActiveMneu] = useRecoilState(activeMenuState);
+  const [_activeImage, setActiveImage] = useRecoilState(activeImageState);
   const themeMode = useRecoilValue(themeState);
   const total = useRecoilValue(totalState);
   const { token } = useToken();
@@ -65,6 +72,7 @@ const SiderMenu = () => {
         onSelect={(item) => {
           const menu = items.find((v) => v.key === item.key);
           setActiveMneu(menu);
+          setActiveImage(undefined);
 
           if (menu?.key === "tags") {
             router.push("/" + menu?.key + "/label");
