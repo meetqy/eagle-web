@@ -13,20 +13,16 @@ const Page = () => {
   const [layoutPos, setLayoutPos] = useState<any>();
   const [page, setPage] = useState(1);
   const [data, setData] = useState<EagleWeb.Image[]>([]);
-  const [init, setInit] = useState(true);
 
   // 请求第一页数据，设置图片总数
   useEffect(() => {
-    if (!init) return;
-
     onLoadMore(1, (notTag) => {
       setTotal({
         ...total,
         "not-tag": notTag,
       });
     });
-    setInit(false);
-  }, [init, setTotal, total]);
+  }, []);
 
   // 加载更多
   const onLoadMore = (_page: number, fn?: (notTag: number) => void) => {

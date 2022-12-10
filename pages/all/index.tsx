@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import justifyLayout from "justified-layout";
 import { selectImages } from "@/hooks";
-import { Layout, theme } from "antd";
+import { Layout } from "antd";
 import { useRecoilState } from "recoil";
 import { totalState } from "@/store";
 import LayoutHeader from "@/components/layout-header";
 import LayoutContent from "@/components/layout-content";
-
-const { useToken } = theme;
 
 const Page = () => {
   const [total, setTotal] = useRecoilState(totalState);
@@ -15,20 +13,16 @@ const Page = () => {
   const [layoutPos, setLayoutPos] = useState<any>();
   const [page, setPage] = useState(1);
   const [data, setData] = useState<EagleWeb.Image[]>([]);
-  const [init, setInit] = useState(true);
 
   // 请求第一页数据，设置图片总数
   useEffect(() => {
-    if (!init) return;
-
     onLoadMore(1, (all) => {
       setTotal({
         ...total,
         all,
       });
     });
-    setInit(false);
-  }, [init, setTotal, total]);
+  }, []);
 
   // 加载更多
   const onLoadMore = (_page: number, fn?: (all: number) => void) => {
