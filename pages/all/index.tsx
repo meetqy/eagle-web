@@ -13,8 +13,7 @@ const Page = () => {
   const { token } = useToken();
 
   const [total, setTotal] = useRecoilState(totalState);
-  const [_activeImage, setActiveImage] = useRecoilState(activeImageState);
-  const [active, setActive] = useState(-1);
+  const [activeImage, setActiveImage] = useRecoilState(activeImageState);
   const [loading, setLoading] = useState(false);
   const [layoutPos, setLayoutPos] = useState<any>();
   const [page, setPage] = useState(1);
@@ -99,7 +98,7 @@ const Page = () => {
                   position: "absolute",
                   background: `rgb(${image.palettes[0].color}, .25)`,
                   overflow: "hidden",
-                  ...(active === i
+                  ...(activeImage?.id === image.id
                     ? {
                         outline: `4px solid ${token.colorPrimary}`,
                         border: 0,
@@ -108,7 +107,6 @@ const Page = () => {
                 }}
                 bodyStyle={{ padding: 0, ...item }}
                 onClick={() => {
-                  setActive(i);
                   setActiveImage(data[i]);
                 }}
               >

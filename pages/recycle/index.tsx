@@ -13,8 +13,7 @@ const Page = () => {
   const { token } = useToken();
 
   const [total, setTotal] = useRecoilState(totalState);
-  const [_activeImage, setActiveImage] = useRecoilState(activeImageState);
-  const [active, setActive] = useState(-1);
+  const [activeImage, setActiveImage] = useRecoilState(activeImageState);
   const [loading, setLoading] = useState(false);
   const [layoutPos, setLayoutPos] = useState<any>();
   const [page, setPage] = useState(1);
@@ -23,7 +22,8 @@ const Page = () => {
 
   // 请求第一页数据，设置图片总数
   useEffect(() => {
-    if (!init) return;
+    if (!init || total.recycle) return;
+    setInit(false);
 
     onLoadMore(1, (count) => {
       setTotal({
@@ -31,7 +31,6 @@ const Page = () => {
         recycle: count,
       });
     });
-    setInit(false);
   }, [init, setTotal, total]);
 
   // 加载更多
@@ -100,7 +99,7 @@ const Page = () => {
                   position: "absolute",
                   background: `rgb(${image.palettes[0].color}, .25)`,
                   overflow: "hidden",
-                  ...(active === i
+                  ...(activeImage?.id === image.id
                     ? {
                         outline: `4px solid ${token.colorPrimary}`,
                         border: 0,
@@ -109,9 +108,7 @@ const Page = () => {
                 }}
                 bodyStyle={{ padding: 0, ...item }}
                 onClick={() => {
-                  console.log(i, data[active]);
-                  setActive(i);
-                  setActiveImage(data[active]);
+                  setActiveImage(data[i]);
                 }}
               >
                 <Image
