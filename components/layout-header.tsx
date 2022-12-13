@@ -128,7 +128,17 @@ const LayoutHeader = (props: Props) => {
         </Col>
       </Row>
 
-      <Row style={{ height: 32 }} align="middle">
+      <Row
+        style={{ height: 32, width: "100%" }}
+        align="middle"
+        justify="space-between"
+      >
+        <Col flex={1}>
+          <Typography.Text type="warning" strong>
+            该版本为一个实验版本，主要验证想法的可行性、技术选型、UI样式统一问题。
+          </Typography.Text>
+        </Col>
+
         <Col>
           <Typography.Text type="secondary">
             json-server
