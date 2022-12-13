@@ -1,10 +1,7 @@
 import { activeMenuState, orderState, sortState } from "@/store";
+import { RightOutlined, SearchOutlined, SwapOutlined } from "@ant-design/icons";
 import {
-  CaretDownOutlined,
-  SearchOutlined,
-  SwapOutlined,
-} from "@ant-design/icons";
-import {
+  Breadcrumb,
   Button,
   Col,
   Input,
@@ -14,12 +11,17 @@ import {
   Row,
   Select,
   Slider,
-  Switch,
   theme,
+  Typography,
 } from "antd";
 import { useRecoilState, useRecoilValue } from "recoil";
 
-const LayoutHeader = () => {
+interface Props {
+  onSearch?: (value: string) => void;
+  searchCount?: number;
+}
+
+const LayoutHeader = (props: Props) => {
   const { token } = theme.useToken();
   const activeMenu = useRecoilValue(activeMenuState);
   const [order, setOrder] = useRecoilState(orderState);
@@ -39,9 +41,21 @@ const LayoutHeader = () => {
     >
       <Row justify="space-between" align="middle" style={{ height: 32 }}>
         <Col>
-          <Button type="text" size="small" style={{ fontWeight: "bold" }}>
-            {activeMenu?.name}
-          </Button>
+          <Breadcrumb
+            separator={<RightOutlined />}
+            style={{ fontWeight: "bold" }}
+          >
+            <Breadcrumb.Item>
+              <Typography.Text>{activeMenu?.name}</Typography.Text>
+            </Breadcrumb.Item>
+            {props.searchCount ? (
+              <Breadcrumb.Item>
+                <Typography.Text>
+                  搜索结果（{props.searchCount}）
+                </Typography.Text>
+              </Breadcrumb.Item>
+            ) : null}
+          </Breadcrumb>
         </Col>
 
         <Col>
@@ -104,10 +118,13 @@ const LayoutHeader = () => {
             </Col>
             <Col>
               <Input
-                placeholder="搜索"
+                placeholder="回车开始搜索"
                 size="small"
-                disabled
                 prefix={<SearchOutlined />}
+                onPressEnter={(e) =>
+                  props?.onSearch &&
+                  props.onSearch((e.target as HTMLInputElement).value)
+                }
               />
             </Col>
           </Row>
@@ -116,10 +133,10 @@ const LayoutHeader = () => {
 
       <Row style={{ height: 32 }} align="middle">
         <Col>
-          <Button type="text" size="small">
+          <Typography.Text type="secondary">
             json-server
-          </Button>
-          联合/多条件查询太复杂了，等后面改为sqlite在接入更多搜索
+            联合/多条件查询实现过于复杂，等后面改为sqlite在接入更多搜索
+          </Typography.Text>
         </Col>
       </Row>
     </Layout.Header>
