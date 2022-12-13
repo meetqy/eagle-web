@@ -18,16 +18,6 @@ const Page = () => {
 
   // 请求第一页数据，设置图片总数
   useEffect(() => {
-    onLoadMore(1, (all) => {
-      setTotal({
-        ...total,
-        all,
-      });
-    });
-  }, [sort, order]);
-
-  // 请求第一页数据，设置图片总数
-  useEffect(() => {
     onLoadMore(1, (notTag) => {
       setTotal({
         ...total,
