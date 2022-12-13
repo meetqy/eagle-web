@@ -40,7 +40,7 @@ namespace EagleWeb {
   }
 
   export interface Metadata {
-    folders: Folder[];
+    folders: MetadataFolder[];
     smartFolders: any[];
     quickAccess: any[];
     tagsGroups: MetadataTagsGroup[];

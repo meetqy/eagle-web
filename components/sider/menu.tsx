@@ -3,6 +3,7 @@ import {
   DeleteOutlined,
   FileImageOutlined,
   FileUnknownOutlined,
+  FolderOpenFilled,
   TagsOutlined,
 } from "@ant-design/icons";
 import { Col, Menu, MenuProps, Row, Typography } from "antd";
@@ -11,6 +12,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import {
   activeImageState,
   activeMenuState,
+  metadataState,
   themeState,
   totalState,
 } from "@/store";
@@ -49,6 +51,9 @@ const SiderMenu = () => {
   const themeMode = useRecoilValue(themeState);
   const total = useRecoilValue(totalState);
   const router = useRouter();
+  const metadata = useRecoilValue(metadataState);
+
+  const folders = useMemo(() => metadata?.folders || [], [metadata?.folders]);
 
   const [items, setItems] = useState<MenuProps["items"]>();
 
@@ -66,8 +71,21 @@ const SiderMenu = () => {
         "recycle",
         <DeleteOutlined />
       ),
+      getItem(
+        "文件夹",
+        "folders",
+        null,
+        folders.map((item) =>
+          getItem(
+            handleLabel(item.name, 0),
+            item.id,
+            <FolderOpenFilled style={{ color: item.iconColor, fontSize: 16 }} />
+          )
+        ),
+        "group"
+      ),
     ]);
-  }, [total]);
+  }, [total, metadata?.folders]);
 
   const selectedKeys = useMemo(
     () => (activeMenu?.key ? [activeMenu.key.toString()] : []),
