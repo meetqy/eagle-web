@@ -115,30 +115,12 @@ const LayoutHeader = () => {
       </Row>
 
       <Row style={{ height: 32 }} align="middle">
-        {[
-          "标签",
-          "文件夹",
-          "形状",
-          "评分",
-          "添加日期",
-          "尺寸",
-          "大小",
-          "注释",
-          "链接",
-        ].map((item) => (
-          <Col key={item}>
-            <Popover
-              placement="bottom"
-              title={item}
-              content={item}
-              trigger="click"
-            >
-              <Button size="small" type="text" disabled>
-                {item} <CaretDownOutlined style={{ fontSize: 10 }} />
-              </Button>
-            </Popover>
-          </Col>
-        ))}
+        <Col>
+          <Button type="text" size="small">
+            json-server
+          </Button>
+          联合/多条件查询太复杂了，等后面改为sqlite在接入更多搜索
+        </Col>
       </Row>
     </Layout.Header>
   );
