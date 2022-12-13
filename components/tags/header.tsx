@@ -1,5 +1,5 @@
 import { tagsState, totalState } from "@/store";
-import { Button, Col, Row } from "antd";
+import { Breadcrumb, Button, Col, Row, Typography } from "antd";
 import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 
@@ -17,13 +17,13 @@ const TagsHeader = () => {
   }, [setTotal, tags, total]);
 
   return (
-    <Row gutter={[10, 0]} style={{ padding: "0 20px" }}>
-      <Col>
-        <Button type="text" style={{ fontWeight: "bold" }} size="small">
+    <Breadcrumb separator=">" style={{ padding: "0 20px", lineHeight: "36px" }}>
+      <Breadcrumb.Item>
+        <Typography.Text strong>
           标签管理({tags?.historyTags.length})
-        </Button>
-      </Col>
-    </Row>
+        </Typography.Text>
+      </Breadcrumb.Item>
+    </Breadcrumb>
   );
 };
 

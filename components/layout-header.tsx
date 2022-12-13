@@ -41,16 +41,13 @@ const LayoutHeader = (props: Props) => {
     >
       <Row justify="space-between" align="middle" style={{ height: 32 }}>
         <Col>
-          <Breadcrumb
-            separator={<RightOutlined />}
-            style={{ fontWeight: "bold" }}
-          >
+          <Breadcrumb separator={<RightOutlined />}>
             <Breadcrumb.Item>
-              <Typography.Text>{activeMenu?.name}</Typography.Text>
+              <Typography.Text strong>{activeMenu?.name}</Typography.Text>
             </Breadcrumb.Item>
             {props.searchCount ? (
               <Breadcrumb.Item>
-                <Typography.Text>
+                <Typography.Text strong>
                   搜索结果（{props.searchCount}）
                 </Typography.Text>
               </Breadcrumb.Item>
