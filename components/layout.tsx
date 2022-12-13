@@ -1,14 +1,22 @@
 import { selectMetadata, selectTags } from "@/hooks";
-import { activeMenuState, metadataState, tagsState, themeState } from "@/store";
+import {
+  activeMenuState,
+  allMenus,
+  metadataState,
+  tagsState,
+  themeState,
+} from "@/store";
 import { Layout, ConfigProvider } from "antd";
 import zhCN from "antd/locale/zh_CN";
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import SiderBasic from "./sider/basic";
 import SiderMenu from "./sider/menu";
 
 const { Sider, Content } = Layout;
+// 不需要展示右侧信息栏的路由 key
+const _rightSiderCollapse = ["tags"];
 
 export default function App({ children }: { children: JSX.Element }) {
   const themeMode = useRecoilValue(themeState);
@@ -27,6 +35,14 @@ export default function App({ children }: { children: JSX.Element }) {
       .then((res) => res.json())
       .then((res) => setTags(res));
   }, []);
+
+  const key = useMemo(
+    () =>
+      (activeMenu && activeMenu.key
+        ? activeMenu.key.toString()
+        : "") as allMenus,
+    [activeMenu]
+  );
 
   return (
     <>
@@ -55,22 +71,10 @@ export default function App({ children }: { children: JSX.Element }) {
             }}
           >
             {children}
-            {/* <Layout>
-             
-              <Layout.Header
-                style={{
-                  position: "sticky",
-                  top: 0,
-                  zIndex: 99,
-                  backgroundColor: token.colorBgContainer,
-                }}
-              ></Layout.Header>
-              <Content style={{ position: "relative" }}></Content>
-            </Layout> */}
           </Content>
           <Sider
             className="sider-basic"
-            collapsed={activeMenu?.basic}
+            collapsed={_rightSiderCollapse.includes(key)}
             collapsedWidth={0}
             width={240}
             theme={themeMode}
