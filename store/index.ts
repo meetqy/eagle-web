@@ -1,4 +1,23 @@
+import { ItemType } from "antd/es/menu/hooks/useItems";
 import { atom } from "recoil";
+
+// 菜单 menu 相关 >>>
+export type allMenus = "all" | "not-tag" | "tags" | "recycle";
+export const menusState = atom({
+  key: "menusState",
+  default: {
+    all: "全部",
+    "not-tag": "未标签",
+    tags: "标签管理",
+    recycle: "回收站",
+  } as { [key in allMenus]: string },
+});
+// 当前选中的菜单  基础信息中需要显示菜单标题
+export const activeMenuState = atom({
+  key: "activeMenuState",
+  default: undefined as ItemType | undefined,
+});
+// end >>>
 
 // 当前选中图片
 export const activeImageState = atom({
@@ -24,12 +43,7 @@ export const metadataState = atom({
   default: undefined as EagleWeb.Metadata | undefined,
 });
 
-export interface Total {
-  all: number;
-  "not-tag": number;
-  tags: number;
-  recycle: number;
-}
+export type Total = { [key in allMenus]: number };
 // 图片数量
 export const totalState = atom({
   key: "totalState",
@@ -39,12 +53,6 @@ export const totalState = atom({
     tags: 0,
     recycle: 0,
   } as Total,
-});
-
-// 当前选中的菜单  基础信息中需要显示菜单标题
-export const activeMenuState = atom({
-  key: "activeMenuState",
-  default: undefined as EagleWeb.MenuItem | undefined,
 });
 
 // 菜单为单位 排序规则

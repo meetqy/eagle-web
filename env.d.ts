@@ -39,14 +39,6 @@ namespace EagleWeb {
     starredTags: string[];
   }
 
-  interface MenuItem {
-    key: string;
-    name: string;
-    icon: JSX.Element;
-    // 基础信息 collapsed 状态
-    basic: boolean;
-  }
-
   export interface Metadata {
     folders: Folder[];
     smartFolders: any[];

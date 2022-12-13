@@ -1,4 +1,10 @@
-import { activeMenuState, orderState, sortState } from "@/store";
+import {
+  activeMenuState,
+  allMenus,
+  menusState,
+  orderState,
+  sortState,
+} from "@/store";
 import { RightOutlined, SearchOutlined, SwapOutlined } from "@ant-design/icons";
 import {
   Breadcrumb,
@@ -14,6 +20,7 @@ import {
   theme,
   Typography,
 } from "antd";
+import { useMemo } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 interface Props {
@@ -26,6 +33,15 @@ const LayoutHeader = (props: Props) => {
   const activeMenu = useRecoilValue(activeMenuState);
   const [order, setOrder] = useRecoilState(orderState);
   const [sort, setSort] = useRecoilState(sortState);
+  const menus = useRecoilValue(menusState);
+
+  const key = useMemo(
+    () =>
+      (activeMenu && activeMenu.key
+        ? activeMenu.key.toString()
+        : "") as allMenus,
+    [activeMenu]
+  );
 
   return (
     <Layout.Header
@@ -43,7 +59,7 @@ const LayoutHeader = (props: Props) => {
         <Col>
           <Breadcrumb separator={<RightOutlined />}>
             <Breadcrumb.Item>
-              <Typography.Text strong>{activeMenu?.name}</Typography.Text>
+              <Typography.Text strong>{menus[key]}</Typography.Text>
             </Breadcrumb.Item>
             {props.searchCount ? (
               <Breadcrumb.Item>

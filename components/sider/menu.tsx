@@ -1,112 +1,109 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   DeleteOutlined,
   FileImageOutlined,
   FileUnknownOutlined,
   TagsOutlined,
 } from "@ant-design/icons";
-import { Col, Menu, Row, theme } from "antd";
+import { Col, Menu, MenuProps, Row, Typography } from "antd";
 import { useRouter } from "next/router";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   activeImageState,
   activeMenuState,
   themeState,
-  Total,
   totalState,
 } from "@/store";
 
-const { useToken } = theme;
+type MenuItem = Required<MenuProps>["items"][number];
+function getItem(
+  label: React.ReactNode,
+  key: React.Key,
+  icon?: React.ReactNode,
+  children?: MenuItem[],
+  type?: "group"
+): MenuItem {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  } as MenuItem;
+}
+
+function handleLabel(name: string, desc: number) {
+  return (
+    <Row justify={"space-between"}>
+      <Col flex={1}>{name}</Col>
+      <Col>
+        <Typography.Text type="secondary">{desc}</Typography.Text>
+      </Col>
+    </Row>
+  );
+}
 
 const SiderMenu = () => {
-  const [activeMenu, setActiveMneu] = useRecoilState(activeMenuState);
+  const [activeMenu, setActiveMenu] = useRecoilState(activeMenuState);
   const [_activeImage, setActiveImage] = useRecoilState(activeImageState);
   const themeMode = useRecoilValue(themeState);
   const total = useRecoilValue(totalState);
-  const { token } = useToken();
   const router = useRouter();
 
-  const [items, setItems] = useState<EagleWeb.MenuItem[]>([
-    {
-      key: "all",
-      name: "全部",
-      icon: <FileImageOutlined />,
-      basic: false,
-    },
-    {
-      key: "not-tag",
-      name: "未标签",
-      icon: <FileUnknownOutlined />,
-      basic: false,
-    },
-    {
-      key: "tags",
-      name: "标签管理",
-      icon: <TagsOutlined />,
-      basic: true,
-    },
-    {
-      key: "recycle",
-      name: "回收站",
-      icon: <DeleteOutlined />,
-      basic: false,
-    },
-  ]);
+  const [items, setItems] = useState<MenuProps["items"]>();
 
   useEffect(() => {
-    const route = router.route.replace("/", "") || "all";
-    if (route != activeMenu?.key) {
-      const index = items.findIndex((item) => route.includes(item.key));
+    setItems([
+      getItem(handleLabel("全部", total.all), "all", <FileImageOutlined />),
+      getItem(
+        handleLabel("未标签", total["not-tag"]),
+        "not-tag",
+        <FileUnknownOutlined />
+      ),
+      getItem(handleLabel("标签管理", total.tags), "tags", <TagsOutlined />),
+      getItem(
+        handleLabel("回收站", total.recycle),
+        "recycle",
+        <DeleteOutlined />
+      ),
+    ]);
+  }, [total]);
 
-      setActiveMneu(items[index]);
+  const selectedKeys = useMemo(
+    () => (activeMenu?.key ? [activeMenu.key.toString()] : []),
+    [activeMenu]
+  );
+  useEffect(() => {
+    const route = router.route.replace("/", "") || "all";
+
+    if (route != activeMenu?.key && items) {
+      const index = items.findIndex(
+        (item) => item?.key && route.includes(item?.key?.toString())
+      );
+
+      setActiveMenu(items[index]);
     }
-  }, [router.route, setActiveMneu, items, activeMenu]);
+  }, [items, router]);
 
   return (
     <>
       <Menu
-        style={{ height: "100%", width: "100%", padding: 10 }}
-        mode="vertical"
+        style={{ width: "100%", padding: 10 }}
+        mode="inline"
         theme={themeMode}
-        selectedKeys={activeMenu ? [activeMenu.key] : []}
-        onSelect={(item) => {
-          const menu = items.find((v) => v.key === item.key);
-          setActiveMneu(menu);
+        items={items}
+        selectedKeys={selectedKeys}
+        onSelect={(e) => {
+          const item = items?.find((item) => item?.key === e.key);
+          setActiveMenu(item);
           setActiveImage(undefined);
 
-          if (menu?.key === "tags") {
-            router.push("/" + menu?.key + "/label");
+          if (e.key === "tags") {
+            router.push("/" + e.key + "/label");
           } else {
-            router.push("/" + menu?.key);
+            router.push("/" + e.key);
           }
         }}
-        items={items.map((item) => {
-          return {
-            key: item.key,
-            icon: item.icon,
-            label: (
-              <Row
-                style={{
-                  display: "inline-flex",
-                  width: "85%",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Col> {item.name}</Col>
-                <Col>
-                  <span
-                    style={{
-                      color: token.colorTextDescription,
-                    }}
-                  >
-                    {total[item.key as keyof Total]}
-                  </span>
-                </Col>
-              </Row>
-            ),
-          };
-        })}
       />
     </>
   );

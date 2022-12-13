@@ -3,6 +3,8 @@ import Image from "next/image";
 import {
   activeImageState,
   activeMenuState,
+  allMenus,
+  menusState,
   tagsState,
   Total,
   totalState,
@@ -10,12 +12,14 @@ import {
 import { useRecoilValue } from "recoil";
 import { Button, Col, Input, Rate, Row, Select, Tooltip } from "antd";
 import styles from "./basic.module.css";
+import { useMemo } from "react";
 
 const SiderBasic = () => {
   const image = useRecoilValue(activeImageState);
   const tags = useRecoilValue(tagsState);
   const activeMenu = useRecoilValue(activeMenuState);
   const total = useRecoilValue(totalState);
+  const menus = useRecoilValue(menusState);
 
   const handleTime = (time: number) => {
     const [date, t] = new Date(time)
@@ -33,19 +37,27 @@ const SiderBasic = () => {
     );
   };
 
+  const key = useMemo(
+    () =>
+      (activeMenu && activeMenu.key
+        ? activeMenu.key.toString()
+        : "") as allMenus,
+    [activeMenu]
+  );
+
   if (!image) {
     return (
       <div style={{ padding: 20 }}>
-        <Row>
-          <Input disabled value={activeMenu?.name}></Input>
-        </Row>
+        <Button block disabled>
+          {menus[key]}
+        </Button>
         <Row style={{ marginTop: 20 }}>
           <Col>基本信息</Col>
         </Row>
         <div className={styles.baseInfo} style={{ marginTop: 20 }}>
           <Row align="middle">
             <Col span={8}>文件数</Col>
-            <Col>{total[activeMenu?.key as keyof Total]}</Col>
+            <Col>{total[key]}</Col>
           </Row>
         </div>
       </div>
