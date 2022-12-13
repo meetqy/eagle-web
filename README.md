@@ -4,6 +4,8 @@
 
 我的 eagle 相关的开源项目，核心点都是围绕着**让 eagle 客户端作为我的后台管理系统**，所以会以我自己的需求为主。
 
+> 该版本为一个实验版本，主要验证想法的可行性、技术选型、UI 样式统一问题。
+
 ## 在线体验
 
 - [eagle-api json-server 版本](https://json-server.rao.pics)
