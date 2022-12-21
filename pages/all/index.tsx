@@ -38,7 +38,6 @@ const Page = () => {
     selectImages({ _page, _sort: sort, _order: order, rules })
       .then((res) => {
         const totalCount = Number(res.headers.get("X-Total-Count"));
-        console.log(rules);
         setSearchCount(rules ? totalCount : 0);
 
         fn && fn(totalCount);

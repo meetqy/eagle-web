@@ -9,7 +9,7 @@
 ## 在线体验
 
 - [eagle-api json-server 版本](https://json-server.rao.pics)
-- [eagle-web](https://rao.pics)
+- [eagle-web](https://play.rao.pics)
 
 ## 界面
 
@@ -21,12 +21,12 @@
 
 ## 我的部署方案（供参考）
 
-| 所需                                       | 说明                          | 费用     |
-| ------------------------------------------ | ----------------------------- | -------- |
-| eagle 客户端                               | 最重要的是 `library`文件      | ￥ 139   |
-| 安装 eagle-api                             | 监听`library`文件实时生成 API | 0        |
-| [FreeFileAsync](https://freefilesync.org/) | 同步文件(`library`)到服务器   | ￥ 8     |
-| 一台 vps                                   | ------                        | ￥ 49/月 |
+| 所需                                       | 说明                          | 费用                          |
+| ------------------------------------------ | ----------------------------- | ----------------------------- |
+| eagle 客户端                               | ------                        | ￥ 139                        |
+| 安装 eagle-api                             | 监听`library`文件实时生成 API | 0                             |
+| [FreeFileAsync](https://freefilesync.org/) | 同步文件(`library`)到服务器   | ￥ 8                          |
+| 一台 vps                                   | ------                        | ￥ 49/月（1T 流量，40G 硬盘） |
 
 ### 大致流程
 

@@ -64,6 +64,8 @@ const SiderBasic = () => {
     );
   }
 
+  console.log(image);
+
   return (
     <div style={{ padding: 20 }}>
       <Image
@@ -99,7 +101,6 @@ const SiderBasic = () => {
           </Col>
         ))}
       </Row>
-
       <Row style={{ marginTop: 20 }}>
         <Col flex={1}>
           <Input value={image.name} disabled />
@@ -113,7 +114,7 @@ const SiderBasic = () => {
             disabled
             mode="multiple"
             value={image.tags}
-            options={tags?.historyTags.map((item) => ({
+            options={(tags?.historyTags || []).map((item) => ({
               label: item,
               value: item,
             }))}
